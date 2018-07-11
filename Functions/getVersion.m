@@ -55,5 +55,7 @@ datenumber=datenum(2018,7,4);
 %        grid is translated and rotated.
 % 1.1    Final update for toolbox export, new documentation and contact
 %        information
-% 1.2    First Public Release of Toolbox - all bugs fixed (hopefully)
+% 1.2    First Public Release of Toolbox - many bugs fixed (hopefully) new
+%        feature computes orthogonality error from wet cells only when mask
+%        is turned on.
 end
