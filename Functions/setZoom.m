@@ -1,0 +1,124 @@
+function setZoom(fnc,setlims)
+% function setZoom(fnc,setlims)
+% performs zoom function and updates any plotted elements
+% Charles James 2017
+handles=getGUIData('handles');
+getVarcheck('setlims',[]);
+zoomlims=getGUIData('zoomlims');
+zoomlevel=getGUIData('zoomlevel');
+isspherical=strcmpi(getGUIData('projection'),'Spherical');
+switch fnc
+    case 'zoomin'
+        [x,y]=getRectangle();
+        if isempty(x)
+            return;
+        end
+        limits=[min(x(:)) max(x(:)) min(y(:)) max(y(:))];
+        if ~handles.puCoord.Value==2
+            %E and W limits must be +/-360
+            limits(1)=max(limits(1),-360);
+            limits(2)=min(limits(2),360);
+            %N and S limits must be +/-90
+            limits(3)=max(limits(3),-90);
+            limits(4)=min(limits(4),+90);
+        end
+        zoomlims=cat(1,zoomlims,limits);
+        zoomlevel=zoomlevel+1;
+        setGUIData(zoomlims);
+        setGUIData(zoomlevel);
+    case 'zoomout'
+        if zoomlevel>1
+            zoomlevel=zoomlevel-1;
+            limits=zoomlims(zoomlevel,:);
+            zoomlims(zoomlevel+1,:)=[];
+            setGUIData(zoomlims);
+            setGUIData(zoomlevel);
+        else
+            % zoom out at zoomlevel=1 is default limits
+            if isspherical
+                limits=[-180 180 -90 90];
+            else
+                [limits(1:2), ~]=getMapCoord([-180 180],[0 0],'ll2xy');
+                [~,limits(3:4)]=getMapCoord([0 0],[-90 90],'ll2xy');
+            end
+        end
+    case 'set'
+        
+        if ~isempty(setlims)
+            limits=setlims;
+        else
+            limits=getGUIData('limits');
+        end
+        if any(zoomlims(zoomlevel,:)~=limits)
+            % only update if zoom limits have changed.
+            zoomlims=cat(1,zoomlims,limits);
+            zoomlevel=zoomlevel+1;
+            setGUIData(zoomlims);
+            setGUIData(zoomlevel);
+        end
+    case 'do nothing'
+        return;
+end
+
+axis(handles.MainAxis,limits);
+axis(handles.BWAxis,limits);
+axis(handles.ColAxis,limits);
+if isspherical
+    if all(limits==[-180 180 -90 90])
+        load defbathy2
+        bathymetry=defbathy2;
+        limits=[-180 180 -90 90];
+        setGUIData(limits);
+        BathyInterpolant=griddedInterpolant(bathymetry.xbathy,bathymetry.ybathy,bathymetry.zbathy,'linear','none');
+        setGUIData(bathymetry);
+        setGUIData(BathyInterpolant);
+        setGridUpdate('Bathymetry');
+        % preload a default coastline for global projection
+        load defcoast2
+        setGUIData('coast',defcoast2);
+        setGridUpdate('Coast');
+        
+    else
+        [lon,lat]=getCoastline(limits);
+        coast.lon=lon;
+        coast.lat=lat;
+        setGUIData(coast);
+        setGUIData(limits);
+        setGridUpdate('Coast');
+        dlon=limits(2)-limits(1);
+        if dlon>90
+            res=8;
+        elseif dlon>45
+            res=4;
+        else
+            res=2;
+        end
+        dres=2*res/60;
+        % for bathymetry go out 1 extra row to ensure no gaps at edge of figure
+        b_limits=limits;
+        b_limits(1)=b_limits(1)-dres;b_limits(2)=b_limits(2)+dres;b_limits(3)=b_limits(3)-dres;b_limits(4)=b_limits(4)+dres;
+        [bathymetry.zbathy,bathymetry.xbathy,bathymetry.ybathy]=getDefaultBathymetry(b_limits,res);
+        if min(size(bathymetry.zbathy))>1
+            setGUIData(bathymetry);
+        end
+        setGridUpdate('Bathymetry');
+    end
+else
+    setGUIData(limits);
+end
+
+% turn zoom off after finishing
+handles.tbZoomMan.State='off';
+set([handles.panMode],'visible','on');
+setGUIData('ZoomOn',false);
+handles.MainFigure.Pointer='arrow';
+switch getGUIData('ScreenMode')
+    case 'modmask'
+        set(getGUIData('hmask'),'HitTest','on');
+    case 'modbath'
+        set(getGUIData('hdepths'),'HitTest','on');
+end
+if ~strcmp(fnc,'set')
+    setBackup();
+end
+end

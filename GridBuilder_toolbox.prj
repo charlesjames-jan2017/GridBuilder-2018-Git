@@ -1,0 +1,107 @@
+<deployment-project plugin="plugin.toolbox" plugin-version="1.0">
+  <configuration build-checksum="2640101614" file="C:\UserData\Documents\MATLAB\GridBuilder 2018 Git\GridBuilder_toolbox.prj" location="C:\UserData\Documents\MATLAB\GridBuilder 2018 Git" name="GridBuilder_toolbox" target="target.toolbox" target-name="Package Toolbox">
+    <param.appname>GridBuilder</param.appname>
+    <param.authnamewatermark>Charles James</param.authnamewatermark>
+    <param.email>Charles.James@sa.gov.au</param.email>
+    <param.company>SARDI</param.company>
+    <param.summary>Grid design tool for oceanographic numerical models.</param.summary>
+    <param.description>Multipurpose Grid Builder based on old Seagrid - includes bathymetry (etopo) and coastlines (gshhg-2.2.4) with depth and mask editing tools.  Will import existing ROMS files and will export ROMS and SWAN compatible files.</param.description>
+    <param.screenshot>${PROJECT_ROOT}\Splash.png</param.screenshot>
+    <param.version>1.2</param.version>
+    <param.output>${PROJECT_ROOT}\GridBuilder.mltbx</param.output>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.guid>f8241028-d308-4241-b4f7-39d5eaada323</param.guid>
+    <param.exclude.filters>% List files contained in your toolbox folder that you would like to exclude
+% from packaging.  Excludes should be listed relative to the toolbox folder.
+% Some examples of how to specify excludes are provided below:
+%
+% A single file in the toolbox folder:
+% .svn
+%
+% A single file in a subfolder of the toolbox folder:
+% example/.svn
+%
+% All files in a subfolder of the toolbox folder:
+% example/*
+%
+% All files of a certain name in all subfolders of the toolbox folder:
+% **/.svn
+%
+% All files matching a pattern in all subfolders of the toolbox folder:
+% **/*.bak
+%
+.git
+Graphics</param.exclude.filters>
+    <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;examples&gt;
+   &lt;exampleCategory name="GridBuilder 2018 Git"&gt;
+      &lt;example name="gbhelp" type="html"&gt;
+         &lt;file type="source"&gt;/html/gbhelp.html&lt;/file&gt;
+         &lt;file type="main"&gt;/gbhelp.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+&lt;/examples&gt;</param.examples>
+    <param.demosxml />
+    <param.apps />
+    <param.docs>${PROJECT_ROOT}\info.xml</param.docs>
+    <param.matlabpath.excludes />
+    <param.javaclasspath.excludes />
+    <unset>
+      <param.output />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
+      <param.demosxml />
+      <param.apps />
+      <param.matlabpath.excludes />
+      <param.javaclasspath.excludes />
+    </unset>
+    <fileset.rootdir>
+      <file>C:\UserData\Documents\MATLAB\GridBuilder 2018 Git</file>
+    </fileset.rootdir>
+    <fileset.rootfiles>
+      <file>${PROJECT_ROOT}\.gitattributes</file>
+      <file>${PROJECT_ROOT}\Data</file>
+      <file>${PROJECT_ROOT}\demos.xml</file>
+      <file>${PROJECT_ROOT}\Functions</file>
+      <file>${PROJECT_ROOT}\gbhelp.m</file>
+      <file>${PROJECT_ROOT}\GridBuilder.fig</file>
+      <file>${PROJECT_ROOT}\GridBuilder.m</file>
+      <file>${PROJECT_ROOT}\html</file>
+      <file>${PROJECT_ROOT}\info.xml</file>
+      <file>${PROJECT_ROOT}\README.md</file>
+      <file>${PROJECT_ROOT}\Splash.png</file>
+    </fileset.rootfiles>
+    <fileset.depfun.included />
+    <fileset.depfun.excluded />
+    <fileset.package />
+    <build-deliverables>
+      <file location="C:\UserData\Documents\MATLAB\GridBuilder 2018 Git" name="GridBuilder.mltbx" optional="false">C:\UserData\Documents\MATLAB\GridBuilder 2018 Git\GridBuilder.mltbx</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2017a</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.1</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
