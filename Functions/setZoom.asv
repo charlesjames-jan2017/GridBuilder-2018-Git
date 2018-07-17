@@ -7,6 +7,7 @@ getVarcheck('setlims',[]);
 zoomlims=getGUIData('zoomlims');
 zoomlevel=getGUIData('zoomlevel');
 isspherical=strcmpi(getGUIData('projection'),'Spherical');
+tic
 switch fnc
     case 'zoomin'
         [x,y]=getRectangle();
@@ -75,7 +76,10 @@ if isspherical
         % preload a default coastline for global projection
         load defcoast2
         setGUIData('coast',defcoast2);
-        setGridUpdate('Coast');        
+        tic
+        setGridUpdate('Coast');
+        toc
+        
     else
         [lon,lat]=getCoastline(limits);
         coast.lon=lon;
@@ -104,6 +108,7 @@ if isspherical
 else
     setGUIData(limits);
 end
+
 % turn zoom off after finishing
 handles.tbZoomMan.State='off';
 set([handles.panMode],'visible','on');

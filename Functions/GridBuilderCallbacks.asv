@@ -5,6 +5,7 @@ function GridBuilderCallbacks(hObject,eventdata,handles)
 % Charles James 2017
 updateplots=true;
 switch hObject
+    tic
 %% Initialize Call
 % initializes or resets GridBuilder, will reset backups too
     case {'Initialize',handles.tbReset,handles.mSG_Clear_Grid}
@@ -72,13 +73,13 @@ switch hObject
             SG=getROMSgrid(fullfile(pathname,filename));
             if ~isempty(SG)
                 setROMSgrid(SG);
-                setGridUpdate('Mask','Depths');
+                setGridUpdate('Bathymetry','Mask','Depths');
                 setGUIData('gridLoaded',true);
                 handles.rbGrid.Value=1;
+            else                
+                updateplots=false;
             end
-        else            
-            updateplots=false;
-        end 
+        end
     case handles.mSG_Load_Coast
         [coastname,coastpath]=getGUIfilename('*.*','Select a Coastline File');
         if coastname==0
@@ -942,11 +943,11 @@ switch hObject
         setPostPan('do nothing');
 end
 % Save updating plots for callbacks that don't change plot settings
-
 if updateplots
     setPlotsUpdate();
 end
 setWidgetsUpdate(handles)
+
 end
 %%
 function ztest=testROMSz

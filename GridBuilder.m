@@ -72,6 +72,22 @@ x0=floor(hres/2-hdef/2);
 y0=floor(vres/2-vdef/2);
 
 handles.MainFigure.Position=[x0 y0 hdef vdef];
+% Deployment check if not running as MCR executable
+if ~isdeployed
+  % following if not running GridBuilder as an installed Toolbox
+  % and subdirectories are not on current path
+  
+  % changed by JLW 
+  [whereisgb,~,~] = fileparts(which('GridBuilder'));
+  addpath(fullfile(whereisgb,'Data'))
+  addpath(fullfile(whereisgb,'Functions'))
+  % for help to work
+  addpath(fullfile(whereisgb,'html'))
+  % was ...
+  % addpath(pwd)
+  % addpath Data
+  % addpath Functions
+end
 GridBuilderCallbacks('Initialize',eventdata,handles);
 
 

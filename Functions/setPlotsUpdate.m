@@ -36,12 +36,9 @@ showDepths=(handles.rbDepths.Value==1);
 showRx0=(handles.rbRx0.Value==1);
 showRx1=(handles.rbRx1.Value==1);
 showOrthog=(handles.rbOrthog.Value==1);
-
 % Fix Limits
 axis(handles.MainAxis,getGUIData('limits'));
 setZoom('set');
-
-
 if editControl
     handles.pbClearCP.Enable='on';
 else
