@@ -209,6 +209,8 @@ end
 setWatch('off');
 
 % update mask and depths
+setGUIData('maxDepth',[]);
+setGUIData('minDepth',[]);
 setGridDepths();
 setGridMask();
 setGridRx0();
