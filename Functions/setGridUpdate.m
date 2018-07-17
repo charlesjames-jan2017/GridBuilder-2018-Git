@@ -66,12 +66,8 @@ for iarg=1:nargin
                         yb=[y1 y2 y2 y1 y1];
                 end
                 [XB,YB]=ndgrid(linspace(x1,x2,400),linspace(y1,y2,400));
-                tic
                 ZB=user_BathyInterpolant(XB,YB);
-                toc
-                tic
                 ind=fastinpoly(XB,YB,xb,yb);
-                toc
                 ZB(~ind)=nan;
                 user_hbath=getGUIData('user_hbath');
                 user_hbath_bound=getGUIData('user_hbath_bound');
